@@ -58,7 +58,7 @@ import pyodbc
 # server = 'myserver,port' # to specify an alternate port
 #driver={ODBC Driver 13 for SQL Server};server=AUSTRIA;database=PS-ODB;trusted_connection=yes
 # server = 'AUSTRIA' 
-#database = 'PS-ODB' 
+# database = 'PS-ODB' 
 #driver= '{ODBC Driver 13 for SQL Server}'
 
 # cnxn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};Server='+server+';Database='+database+';Trusted_Connection=yes;')
@@ -67,11 +67,13 @@ import pyodbc
 
 # Mysql, ORACLE, postgress, others
 
-# pip install pymysql
+# !pip install pymysql
+# !pip install pyodbc 
 # pip install mysqlclient
 # !pip install pymysql
+# !pip install xlrd
 
-import pymysql
+# import pymysql
 
 # Open database connection
 
@@ -106,19 +108,26 @@ import pymysql
 
 ## Print results
 
-for row in cursor:
-    print(row)
+# # for row in cursor:
+#     print(row)
 
-# Fetch a single row using fetchone() method.
-data = cursor.fetchone()
-print ("Database version : %s " % data)
-# disconnect from server
-db.close()
+# # Fetch a single row using fetchone() method.
+# data = cursor.fetchone()
+# print ("Database version : %s " % data)
+# # disconnect from server
+# db.close()
 
-print(1+1)
-prueba = pd.read_sql_query('SELECT * FROM [PS-ODB].[dbo].[v_SPServicePayment]',cnxn)
+# print(1+1)
 
-prueba = pd.read_sql_query('SELECT * FROM db', connection)
+# prueba = pd.read_csv('C:/Users/pmontenegro/Desktop/Python/Coco/Otros/raw prove/IDS.csv') 
+
+prueba = pd.read_csv('C:/Users/pmontenegro/Desktop/Python/Coco/Otros/raw prove/Topic_Survey_Assignment.csv') 
+
+ #,sheet_name='IDS')
+
+# prueba = pd.read_sql_query('SELECT * FROM [PS-ODB].[dbo].[v_SPServicePayment]',cnxn)
+
+# prueba = pd.read_sql_query('SELECT * FROM db', connection)
 
 #information
 
@@ -131,8 +140,8 @@ prueba.dtypes
 
 prueba.describe(include= "all")
 
-print("Missing Values")
-print(prueba.isnull.sum(), "\n")
+# print("Missing Values")
+# print(prueba.isnull.sum(), "\n")
 
 
 
