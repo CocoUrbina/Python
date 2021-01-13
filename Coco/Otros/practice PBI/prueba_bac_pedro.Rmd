@@ -1,0 +1,144 @@
+---
+title: "BAC Pedro Montenegro"
+output: 
+  flexdashboard::flex_dashboard
+---
+
+
+<center>
+<h2><font size="6.5" FACE="eras bold itc">**Prueba Técnica BAC**</font>
+</h2></center>
+<br></br>
+
+<style>
+.tabset { 
+  background-color: #4c51f7;
+}
+<!-- body { -->
+<!--   background-color: white; -->
+<!-- } -->
+</style>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(openxlsx)
+library(ggplot2)
+library(readxl)
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(stringr)
+library(plotly)
+library(scales)
+library(kableExtra)
+library(readxl)
+library(RDS)
+library(flexdashboard)
+options(scipen= 999)
+
+data <- read_excel("C:/Users/pmontenegro/Desktop/PruebaTécnicaCD.xlsx")
+```
+
+```{r transformacion}
+data <- data %>% 
+    mutate(val_num_dolar= ifelse(`Desc Pais`=="Costa Rica",`Valor Numeral`/601,
+                          ifelse(`Desc Pais`=="El Salvador",`Valor Numeral`,
+                          ifelse(`Desc Pais`=="Guatemala",`Valor Numeral`/7.58,
+                          ifelse(`Desc Pais`=="Honduras",`Valor Numeral`/24.3522,
+                          ifelse(`Desc Pais`=="Nicaragua",`Valor Numeral`/34.27,
+                          ifelse(`Desc Pais`=="Panamá",`Valor Numeral`,"error"))))))) %>%
+    mutate(val_num_dolar= as.numeric(val_num_dolar)) %>% 
+    mutate(rangos= ifelse(val_num_dolar<0, "Menor $0",
+                   ifelse(val_num_dolar>=0 & val_num_dolar< 5000, "$0 a $5K",
+                   ifelse(val_num_dolar>=5000 & val_num_dolar< 50000, "$5K a $50K",
+                   ifelse(val_num_dolar>=50000 & val_num_dolar< 100000, "$50K a $100K",
+                   ifelse(val_num_dolar>=100000 & val_num_dolar< 500000, "$100K a $500K",
+                   ifelse(val_num_dolar>=500000,"Más de $500K","otro")))))))
+
+medidas <- data %>% 
+    group_by(`Desc Pais`) %>% 
+    summarise(Promedio= mean(val_num_dolar, na.rm = TRUE),
+              Varianza= var(val_num_dolar),
+              Mediana= median(val_num_dolar, na.rm = TRUE),
+              sd= sd(val_num_dolar),
+              Minimo= min(val_num_dolar),
+              Maximo= max(val_num_dolar))
+
+medidas2 <- data %>% 
+    #group_by(`Desc Pais`) %>% 
+    summarise(Promedio= mean(val_num_dolar, na.rm = TRUE),
+              Varianza= var(val_num_dolar),
+              Mediana= median(val_num_dolar, na.rm = TRUE),
+              sd= sd(val_num_dolar),
+              Minimo= min(val_num_dolar),
+              Maximo= max(val_num_dolar))
+```
+
+
+
+Medidas
+===========================================================
+
+Colum {data-width=240}
+-----------------------------------------------------------
+
+### Promedio
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$Promedio,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+### Varianza
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$Varianza,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+### Mediana
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$Mediana,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+### Desviacion estandar
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$sd,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+### Minimo
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$Minimo,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+
+### Máximo
+
+```{r fig.width=3, fig.height=3}
+valueBox(round(medidas2$Maximo,1), icon = "fa-users",
+         color = "#4c51f7")
+```
+
+Colum 
+-----------------------------------------------------------
+
+### **Caracteristicas Pais y monto**
+
+```{r}
+data %>% ggplot(aes(x=`Valor Numeral`, y=`Desc Pais`)) +
+     geom_col()
+
+```
+
+
