@@ -26,27 +26,28 @@ import os
 import sys
 print(sys.version)
 
-import sklearn
+# import sklearn
 
-#from sklearn.ensemble import RandomForestClassifier
-#from sklearn.preprocessing import LabelEncoder
-#from sklearn import cross_validation
-#from sklearn.grid_search import GridSearchCV
-#from time import time
-#from operator import itemgetter 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+from time import time
+from operator import itemgetter 
+
+# from sklearn import cross_validation
+# from sklearn.grid_search import GridSearchCV
+# from operator import itemgetter 
 
 
-
-#warnings.filterwarnings("ignore", category= DeprecationWargning)
+# warnings.filterwarnings("ignore", category= DeprecationWargning)
 
 # Connection 
 
-#connection = dbapi.connect(
-#        address= "zeus.hana",
-#        port= 21172,
-#        encrypt= "true",
-#        user= "pmontenegro",
-#        password= "xxxx.xxxx")
+# connection = dbapi.connect(
+#         address= "zeus.hana",
+#         port= 21172,
+#         encrypt= "true",
+#         user= "pmontenegro",
+#         password= "xxxx.xxxx")
 
 # SQL
 
@@ -56,22 +57,21 @@ import pyodbc
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
 #driver={ODBC Driver 13 for SQL Server};server=AUSTRIA;database=PS-ODB;trusted_connection=yes
-server = 'AUSTRIA' 
-database = 'PS-ODB' 
+# server = 'AUSTRIA' 
+#database = 'PS-ODB' 
 #driver= '{ODBC Driver 13 for SQL Server}'
 
-cnxn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};Server='+server+';Database='+database+';Trusted_Connection=yes;')
-#cnxn = pyodbc.connect('driver={ODBC Driver 13 for SQL Server};SERVER='+server+';DATABASE='+database+';Trusted_Connection=yes;)
-cursor = cnxn.cursor()
+# cnxn = pyodbc.connect('Driver={ODBC Driver 13 for SQL Server};Server='+server+';Database='+database+';Trusted_Connection=yes;')
+# cnxn = pyodbc.connect('driver={ODBC Driver 13 for SQL Server};SERVER='+server+';DATABASE='+database+';Trusted_Connection=yes;)
+# cursor = cnxn.cursor()
 
 # Mysql, ORACLE, postgress, others
 
 # pip install pymysql
 # pip install mysqlclient
-#pip install pymysql
+# !pip install pymysql
 
 import pymysql
-
 
 # Open database connection
 
@@ -102,7 +102,7 @@ import pymysql
 
 # execute SQL query using execute() method.
 
-cursor.execute('SELECT * FROM [PS-ODB].[dbo].[v_SPServicePayment]')
+# cursor.execute('SELECT * FROM [PS-ODB].[dbo].[v_SPServicePayment]')
 
 ## Print results
 
